@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <title>Ron</title>
+</head>
+<body>
+    <div class="container">
+
+            <div id="form-obj" class="jumbotron">
+                <h3>Ron Project</h3>
+                <hr>
+                <form action="/" method="POST">
+                    <div class="form-group">
+                            <label for="exampleInputPassword1">GMAT Score</label>
+                            <input type="number" name="f1" class="form-control"  placeholder="Score" required>
+                    </div>
+                    <div class="form-group">
+                            <label for="exampleInputPassword1">Region</label>
+                            <input type="text" name='f2' class="form-control"  placeholder="Region" required>
+                    </div>
+                    <div class="form-group">
+                            <label for="exampleInputPassword1">Post MBA Industry</label>
+                            <input type="text" name=f3 class="form-control"  placeholder="Enter Post MBA Industry" required>
+                    </div>
+                    <div class="form-group">
+                        <button id="f-submit" type="submit" class="btn btn-outline-primary">Submit</button>
+                    </div>
+                </form>
+                {% if error and error == True %}
+                <div class="alert alert-danger" role="alert">
+                        All fields are mandatory!
+                </div>
+                {% endif %}
+            </div>
+
+            <div id="loader" class="container text-center">
+                <img style="width:40%;height:40%;" src="{{ url_for('static',filename='loading.gif') }}" alt="Loading...">
+                <p>Please wait while we process your preferences...</p>
+            </div>
+
+            {% if result %}
+            <div class="container text-center">
+                
+                <h3>Preferences</h3>
+                <ul style="width:100%;" class="list-group list-group-horizontal-md">
+                        {% for i in result.prefs %}
+                    <li style="width:100%;" class="list-group-item"> {{i}} </li>
+                        {% endfor %}
+                </ul>
+
+                <hr>
+
+                <h3>Universities</h3>
+                <ul style="width: 100%;" class="list-group list-group-horizontal-sm">
+                        {% for i in result.univs %}
+                    <li style="width:100%;" class="list-group-item"> {{i}} </li>
+                        {% endfor %}
+                </ul>
+                
+            </div>
+            {% endif %}
+
+    </div>
+</body>
+<script>
+$(document).ready(function(){
+
+    $('#loader').hide();
+    $('#form-obj').show();
+    $('#f-submit').on('click',function(){
+        $('#form-obj').hide();
+        $('#loader').show();
+    });
+
+});
+</script>
+</html>
